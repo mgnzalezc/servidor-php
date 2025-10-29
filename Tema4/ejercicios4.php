@@ -263,6 +263,63 @@
     </table>
 
     
+    <h3>Notas ordenadas</h3>
+    <?php
+
+    //ORDENA LA TABLA POR NOMBRE ALUMNO Y LUEGO POR NOTA
+        ksort($clase);
+        foreach ($clase as $nombre => $alumno) {
+            //ksort($clase[$nombre]); //ordenar por asig
+            asort($clase[$nombre]); //ordenar por nota      
+        }
+    ?>
+
+    <table border="1px" width="100%">
+        <tr>
+            <th>Alumno</th>
+            <th>Asignatura</th>
+            <th>Nota</th>
+            <th>Calificacion</th>
+        </tr>
+    <?php
+        foreach ($clase as $nombre => $alumno){
+            $primera = true;
+            foreach ($alumno as $asig => $nota){
+
+                [$notaS, $color] = match (true) {
+                ($nota<5) => ["suspenso","#e4dafd"],
+                ($nota<=6) => ["bien","#d7e7fd"],
+                ($nota<=8) => ["notable","#ffece3"],
+                ($nota<=10) =>["sobresaliente","#f9e0e0"]
+                };
+
+                if($primera){
+    ?>
+                <tr>
+                    <td rowspan="<?php echo $tam?>"> <?php echo $nombre?></td>
+                    <td bgcolor="<?php echo $color ?>"><?php echo $asig?></td>
+                    <td bgcolor="<?php echo $color ?>"><?php echo $nota?></td>
+                    <td bgcolor="<?php echo $color ?>"><?php echo $notaS?></td>
+                </tr>
+    <?php
+                $primera = false;
+                } else {
+    ?>
+                <tr>     
+                    <td bgcolor="<?php echo $color ?>"><?php echo $asig?></td>
+                    <td bgcolor="<?php echo $color ?>"><?php echo $nota?></td>
+                    <td bgcolor="<?php echo $color ?>"><?php echo $notaS?></td>
+                </tr>
+    <?php
+                }
+            }
+        }
+
+    ?>
+    </table>
+  
+
+    
 
 </body>
 </html>
