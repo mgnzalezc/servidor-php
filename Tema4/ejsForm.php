@@ -11,6 +11,8 @@
 </head>
 <body>
 
+<!-- post los datos van por http, get va por la url -->
+
     <h3>Ejercicio 1</h3>
     <form action="formulario2.php" method="POST">
         <label for="msj">Mensaje:</label>
@@ -39,6 +41,26 @@
 
         <input type="submit" value="ENVIAR"><br>
     </form>
+
+    <h3>Ejercicio conversion temperatura</h3>
+    <form action="formulario2.php" method="POST">
+        <label for="temp">Numero:</label>
+        <input type="number" name="temp"><br>
+        <select name="og">
+            <option value="c">Celsius</option>
+            <option value="k">Kelvin</option>
+            <option value="f">Farenheit</option>
+        </select><br>
+        <select name="fnl">
+            <option value="c">Celsius</option>
+            <option value="k">Kelvin</option>
+            <option value="f">Farenheit</option>
+        </select><br>
+
+        <input type="submit" value="ENVIAR"><br>
+    </form>
+
+    
     
 </body>
 </html>
