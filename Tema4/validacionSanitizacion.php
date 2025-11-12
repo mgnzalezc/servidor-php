@@ -64,6 +64,7 @@
             //si no se escoge opcion en select se manda vacio
             //usar isset() para los select
             print_r($_POST);
+            var_dump($_POST["edad"]);
             $tmp_nombre = $_POST["nombre"];
             $tmp_edad = $_POST["edad"];
 
@@ -71,7 +72,7 @@
                 $err_genero = "<p style='background-color:red'>Insterta un genero</p>";
             }
 
-            if($tmp_nombre == ""){
+            if($tmp_nombre == "" || $tmp_nombre == 0 || $tmp_nombre == [] || $tmp_nombre == NULL){
                 $err_nombre = "<p>Inserta un nombre</p>";
             } else{
                 $nombre = $tmp_nombre;
