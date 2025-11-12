@@ -67,21 +67,26 @@
         $joker = $_POST["joker"];
         $avengers = $_POST["avengers"];
 
-        foreach ($peliculas as $titulo => $datos) {
+        foreach ($peliculas as $titulo => &$datos) {
             if($titulo == "inception"){
                 $total = $datos["precio_dia"] * $inception;
+                $datos["dias"] = $inception;
                 $datos["total"] = $total;
             } else if ($titulo == "parasite"){
                 $total = $datos["precio_dia"] * $parasite;
+                $datos["dias"] = $parasite;
                 $datos["total"] = $total;
             } else if ($titulo == "interstellar"){
                 $total = $datos["precio_dia"] * $interstellar;
+                $datos["dias"] = $interstellar;
                 $datos["total"] = $total;
             } else if ($titulo == "joker"){
                 $total = $datos["precio_dia"] * $joker;
+                $datos["dias"] = $joker;
                 $datos["total"] = $total;
             } else if ($titulo == "avengers"){
                 $total = $datos["precio_dia"] * $avengers;
+                $datos["dias"] = $avengers;
                 $datos["total"] = $total;
             }
         }
@@ -91,6 +96,33 @@
     }
 
 ?>
+
+    <table border="1px">
+        <tr>
+            <th>Pelicula</th>
+            <th>Genero</th>
+            <th>Precio/dia</th>
+            <th>Dias</th>
+            <th>Subtotal</th>
+        </tr>
+        <?php
+            foreach ($peliculas as $titulo => $datos) {
+                echo "<tr>";
+                if($datos["dias"] != 0){
+                    foreach ($datos as $descripc => $valor) {
+                    
+                        echo "<td>";
+                        echo $valor;
+                        echo "</td>";
+                    }
+                }
+                echo "</tr>";
+            }
+
+        ?>
+        
+
+    </table>
 
 
 </body>
