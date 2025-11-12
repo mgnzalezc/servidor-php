@@ -32,24 +32,6 @@
 
 
 
-<form method="POST" action="">
-    <label for="pan">Pan</label>
-    <input type="number" name="pan" value="0"><br>
-
-
-    <input type="submit" value="ENVIAR">
-    
-</form>
-
-
-<?php
-    if($_SERVER["REQUEST_METHOD"]=="POST"){
-
-    }
-
-
-?>
-
 
 
 
