@@ -23,7 +23,7 @@
         $repes=[];
 
         $tmp_num1 = [];
-            $tmp_num2 = [];
+        $tmp_num2 = [];
             for ($i=0; $i < strlen($num1); $i++) { 
                 for ($j=0; $j < count($tmp_num1); $j++) { 
                     if($num1[$i]==$tmp_num1[$j]){ //ya esta metido en array
@@ -37,6 +37,7 @@
                 }
                 
             }
+            
 
             for ($i=0; $i < strlen($num2); $i++) { 
                 for ($j=0; $j < count($tmp_num2); $j++) { 
@@ -58,17 +59,33 @@
             sort($tmp_num2);
             print_r($tmp_num1);
             print_r($tmp_num2);
-
+            $esta = false;
 
         if($num1 == $num2){
             echo "los numeros son iguales";
         }
         else if($opcion=="1"){
             $resultado = [];
+            for ($i=0; $i < count($tmp_num1); $i++) { 
+                for ($j=0; $j < count($tmp_num2); $j++) { 
+                    if($tmp_num1[$i]==$tmp_num2[$j]){
+                        $esta = true;
+                    }
+                }
+                if($esta){
+                    $resultado[]=$tmp_num1[$i];
+                    $esta = false;
+                }
+            }
             
+            sort($resultado);
+            print_r($resultado);
             
-        } else if($opcion=="2"){
-        } else if($opcion=="3"){
+        } else if($opcion == "2"){
+            $resultado = $tmp_num1;
+
+
+        }
 
 
 
