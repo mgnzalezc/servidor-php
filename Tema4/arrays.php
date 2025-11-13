@@ -86,7 +86,7 @@
             <th>Nombre</th>
         </tr>
         <?php
-            foreach ($dni as $current => $valor ){
+            foreach ($dni as $current => $valor){
         ?>
                 <tr>
                     <td> <?php echo $current ?> </td>

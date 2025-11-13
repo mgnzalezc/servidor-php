@@ -129,8 +129,9 @@
     ?>
     </table> 
     <?php
+
     //APARTADO 3. ORDENA POR CATEGORIA Y DESPUES POR PRECIO
-        $precio =array_column($videojuegos, 2);
+        $precio = array_column($videojuegos, 2);
         $categoria = array_column($videojuegos, 1);
         array_multisort(
             $categoria, SORT_ASC,

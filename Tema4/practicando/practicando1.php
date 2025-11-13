@@ -22,6 +22,63 @@
         $todos = [];
         $repes=[];
 
+        $tmp_num1 = [];
+            $tmp_num2 = [];
+            for ($i=0; $i < strlen($num1); $i++) { 
+                for ($j=0; $j < count($tmp_num1); $j++) { 
+                    if($num1[$i]==$tmp_num1[$j]){ //ya esta metido en array
+                        $esta = true;
+                    }
+                }
+                if(!$esta){
+                    $tmp_num1[] = $num1[$i];
+                } else {
+                    $esta = false;
+                }
+                
+            }
+
+            for ($i=0; $i < strlen($num2); $i++) { 
+                for ($j=0; $j < count($tmp_num2); $j++) { 
+                    if($num2[$i]==$tmp_num2[$j]){ //ya esta metido en array
+                        $esta = true;
+                    }
+                }
+                if(!$esta){
+                    $tmp_num2[] = $num2[$i];
+                } else {
+                    $esta = false;
+                }
+                
+            }
+
+            echo "num1 es $num1 <br>";
+            echo "num2 es $num2 <br>";
+            sort($tmp_num1);
+            sort($tmp_num2);
+            print_r($tmp_num1);
+            print_r($tmp_num2);
+
+
+        if($num1 == $num2){
+            echo "los numeros son iguales";
+        }
+        else if($opcion=="1"){
+            $resultado = [];
+            
+            
+        } else if($opcion=="2"){
+        } else if($opcion=="3"){
+
+
+
+
+
+
+
+
+
+/*
 
         if($num1 == $num2){
             echo "Los numers son iguales";
@@ -117,8 +174,9 @@
             print_r($todos_tmp);
             print_r($todos);
         }
-        
+        */
     }
+        
     echo "<br><a href='practicando1.html'>Volver a form</a>";
 ?>
 
