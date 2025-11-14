@@ -3,60 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validacion y Sanitizacion</title>
+    <title>Ejercicios validacion</title>
     <?php
         error_reporting(E_ALL); //recoge errores, E_ALL son todos
         ini_set("display_errors", 1); //modificar valor error variable PHP
         //require(ruta relativa de clase con funcion que quiero);
-        require("../Tema3/operaciones2.php"); //por ejemplo.
     ?>
-
 </head>
 <body>
-    <?php
-    //VALIDACION controla lo que mete el usuario por pantalla
-    //SANITIZACION cambia lo que el usuario a metido
-
-    //isset() te devuelve un bool diciendote si esta creada o no, y si es null te sale false
-
-    //empty() devuelve TRUE si la variable no esta definida, tiene valor 0, es null o es un array vacio
-
-
-    // CASO 1, definida y vacia
-    echo "<h3>Caso 0.1: isset() devuelve true y empty() devuelve true</h3>"; //esta definida y vacia
-    echo "<p>Valor 0</p>";
-    $valor = 0;
-    if(isset($valor)) echo "<p>La variable \$valor esta definida</p>";
-    else echo "<p>La variable \$valor no esta definida o es NULL</p>";
-
-    if(empty($valor)) echo "<p>La variable \$valor esta vacia o es null</p>";
-    else echo "<p>La variable \$valor NO esta vacia</p>";
-
-
-    // CASO 2, no definida therefore vacia
-    echo "<h3>Caso 0.2: isset() devuelve false y empty() devuelve true</h3>";
-    echo "<p>Valor undefined</p>";
-    unset($valor); //nos cargamos la variable
-    if(isset($valor)) echo "<p>La variable \$valor esta definida</p>";
-    else echo "<p>La variable \$valor no esta definida o es NULL</p>";
-
-    if(empty($valor)) echo "<p>La variable \$valor esta vacia o es null</p>";
-    else echo "<p>La variable \$valor NO esta vacia</p>";
-
-
-    // CASO 3, definida y llena
-    echo "<h3>Caso 1: isset() devuelve true y empty() devuelve true</h3>";
-    echo "<p>Mi variable pone 'juan'</p>";
-    $nombre = "juan";
     
-    if(isset($valor)) echo "<p>La variable \$nombre esta definida</p>";
-    else echo "<p>La variable \$nombre no esta definida o es NULL</p>";
-
-    if(empty($valor)) echo "<p>La variable \$nombre esta vacia o es null</p>";
-    else echo "<p>La variable \$nombre NO esta vacia</p>";
-
-    ?>
-
     <h3>EJERCICIO 1.</h3>
 
     <?php
@@ -130,6 +85,8 @@
         </select>
         <input type="submit" value="ENVIAR">
     </form>
+
+
 
 </body>
 </html>
