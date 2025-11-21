@@ -10,6 +10,7 @@
     ?>
 </head>
 <body>
+    <p>SIN TERMINAR ESTA ESTO</p>
     <h3>Primitiva</h3>
     <p>Introduce 6 numeros distintos del 1-20.</p>
     <form action="" method="POST">

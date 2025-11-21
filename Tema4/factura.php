@@ -10,6 +10,8 @@
     ?>
 </head>
 <body>
+    <p>SIN TERMINAR ESTA ESTO
+    </p>
     <form method="POST" action="">
 
         Pan<input type="number" name="pan" value="0">
