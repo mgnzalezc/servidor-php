@@ -1,6 +1,6 @@
 <?php
 /**
- * Vamos a crear conexion entre PHP y la db mysql, usando la clase mysql
+ * Vamos a crear conexion entre PHP y la db mysql, usando la clase mysqli
  * 
  * new mysqli(...) --> es el constructor de la clase mysqli, que se utiliza para inicializar un objeto que representa la conexion a db
  * 
