@@ -50,7 +50,7 @@
 
             if(isset($contrasena)&&isset($usuario)){
                 $contrasena_cifrada = password_hash($contrasena, PASSWORD_DEFAULT);
-                $consulta = "INSERT INTO usuarios (usuario, contrasena, admin) VALUES ('&usuario', '&contrasena_cifrada', '$admin')";
+                $consulta = "INSERT INTO usuarios (usuario, contrasena, admin) VALUES ('$usuario', '$contrasena_cifrada', '$admin')";
                 if($resultado = $_conexion->query($consulta)){
                     echo "<div class='alert alert-success'> Usuario registrado correctamente </div>";
                 } else{
@@ -76,6 +76,9 @@
                     <div class="mb-3">
                         <label class="form-label" for="">Contraseña</label>
                         <input type="password" name="contrasena" class="form-control">
+                        <?php
+                        if (isset($err_contrasena)) echo "<div class='alert alert-danger'> $err_contrasena </div>";
+                        ?>
                     </div>
 
                     <div class="mb-3">

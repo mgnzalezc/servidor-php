@@ -43,8 +43,8 @@
                 } else {
                     $info_usuario = $resultado->fetch_assoc();
 
-                    echo "Contraseña ingresada: $contrasena";
-                    echo"<br>Hash almacenado".$info_usuario['contrasena'];
+                    //echo "Contraseña ingresada: $contrasena";
+                    //echo"<br>Hash almacenado".$info_usuario['contrasena'];
                     $verificacion_contrasena = (password_verify($contrasena, $info_usuario["contrasena"]));
 
                     if(!$verificacion_contrasena){
@@ -94,11 +94,17 @@
                     <div class="mb-3">
                         <label class="form-label" for="">Usuario</label>
                         <input type="text" name="usuario" class="form-control">
+                        <?php
+                        if (isset($err_usuario)) echo "<div class='alert alert-danger'> $err_usuario </div>";
+                        ?>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="">Contraseña</label>
                         <input type="password" name="contrasena" class="form-control">
+                        <?php
+                        if (isset($err_contrasena)) echo "<div class='alert alert-danger'> $err_contrasena </div>";
+                        ?>
                     </div>
 
                     <div class="mb-3">
