@@ -12,30 +12,26 @@
     require "conexion.php";
     ?>
 </head>
-<body>
-    <?php
-        if($_SERVER["REQUEST_METHOD"] =="POST"){
+<?php
+    if($_SERVER["REQUEST_METHOD"] =="POST"){
 
-            $tmp_usuario = $_POST["usuario"];
+            $tmp_email = $_POST["email"];
             $tmp_contrasena = $_POST["contrasena"];
             //en checkbox, si se ha mandado algo existe y si no pues no (no hay cadena vacia)
             $admin = isset($_POST["admin"]) ? 1 : 0; //si es true, guardo 1, si es false guardo 0
-            $correcto = true;
 
             // VALIDACION USUARIO
 
-            $tmp_usuario = htmlspecialchars($tmp_usuario);
-            $tmp_usuario = trim($tmp_usuario);
-            $tmp_usuario = preg_replace("/\s+/", "_", $tmp_usuario);
+            $tmp_email = htmlspecialchars($tmp_email);
+            $tmp_email = trim($tmp_email);
+            $tmp_email = preg_replace("/\s+/", "_", $tmp_email); //esto que es?
 
-            if ( $tmp_usuario == ""){ //obligatorio siempre
-                $err_usuario = "Inserta un usuario";
-                $correcto = false;
-            }elseif(strlen($tmp_usuario)<3){
-                $err_usuario = "el usuario tiene que tener al menos 3 chars";
-                $correcto = false;
+            if ( $tmp_email == ""){ //obligatorio siempre
+                $err_email = "Inserta un usuario";
+            }elseif(strlen($tmp_email)<3){ //tiene que tener texto, luego @ texto y luego .
+                $err_email = "Email incorrecto";
             } else{
-                $usuario = $tmp_usuario;
+                $email = $tmp_email;
             }
 
             // VALIDACION CONTRASEÑA
@@ -43,20 +39,18 @@
             $tmp_contrasena = htmlspecialchars($tmp_contrasena);
             $tmp_contrasena = trim($tmp_contrasena);
 
-            if ( $tmp_contrasena == ""){ //obligatorio siempre
+            if ( $tmp_contrasena == ""){
                 $err_contrasena = "Inserta una contraseña";
-                $correcto = false;
             }elseif(strlen($tmp_contrasena)<3){
-                $correcto = false;
                 $err_contrasena = "la contraseña tiene que tener al menos 3 chars";
             } else{
                 $contrasena = $tmp_contrasena;
             }
 
-            if($correcto){
+            if(isset($contrasena)&&isset($usuario)){
                 $contrasena_cifrada = password_hash($contrasena, PASSWORD_DEFAULT);
                 $consulta = "INSERT INTO usuarios (usuario, contrasena, admin) VALUES ('$usuario', '$contrasena_cifrada', '$admin')";
-                if($resultado = $_conexion->query($consulta)){ //si se ha podido hacer la query o no
+                if($resultado = $_conexion->query($consulta)){
                     echo "<div class='alert alert-success'> Usuario registrado correctamente </div>";
                 } else{
                     echo "<div class='alert alert-danger'> No se ha podido registrar </div>";
@@ -65,16 +59,17 @@
             }
 
         }
-    ?>
+?>
+<body>
     <div class="container mt-5">
         <div class = "row justify-content-center">
             <div class="col-md-6 col-lg-4">
                 <form action="" method="POST">
                     <div class="mb-3">
-                        <label class="form-label" for="">Usuario</label>
-                        <input type="text" name="usuario" class="form-control">
+                        <label class="form-label" for="">Email</label>
+                        <input type="text" name="email" class="form-control">
                         <?php
-                        if (isset($err_usuario)) echo "<div class='alert alert-danger'> $err_usuario </div>";
+                        if (isset($err_email)) echo "<div class='alert alert-danger'> $err_email </div>";
                         ?>
                     </div>
 

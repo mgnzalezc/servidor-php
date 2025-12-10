@@ -41,11 +41,12 @@
                 if($resultado->num_rows === 0){
                     echo "<div class = 'alert alert-danger'>El usuario no existe en la base de datos</div>";
                 } else {
-                    $info_usuario = $resultado->fetch_assoc();
+                    $info_usuario = $resultado->fetch_assoc(); //array asociativo con los datos de esa fila
 
                     //echo "Contraseña ingresada: $contrasena";
                     //echo"<br>Hash almacenado".$info_usuario['contrasena'];
                     $verificacion_contrasena = (password_verify($contrasena, $info_usuario["contrasena"]));
+                    //verificacion es para verificar la contraseña que ha metido con la contrasña HASHEADA de la consulta en la bd
 
                     if(!$verificacion_contrasena){
                         echo "<div class = 'alert alert-danger'>La contraseña no coincide</div>";
@@ -54,7 +55,7 @@
                         // crea/lee una cookie llamada PHPSESSID en el navegador del usuario
                         // carga los datos de la sesion desde el seridor en el array $_SESSION
 
-                        // este session_start() lo usaremos al inicio de CADA pagina que cesite acceder a datos de la sesion
+                        // este session_start() lo usaremos al inicio de CADA pagina que necesite acceder a datos de la sesion
 
                         // llamaremos a la funcion antes de enviar cualquier salida HTML (antes del DOCTYPE)
 
