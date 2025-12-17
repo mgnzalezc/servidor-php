@@ -15,7 +15,6 @@
 <body>
     <?php
         if($_SERVER["REQUEST_METHOD"] =="POST"){
-
             $tmp_usuario = $_POST["usuario"];
             $tmp_contrasena = $_POST["contrasena"];
             //en checkbox, si se ha mandado algo existe y si no pues no (no hay cadena vacia)
