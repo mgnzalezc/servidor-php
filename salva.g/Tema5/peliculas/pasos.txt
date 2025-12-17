@@ -1,0 +1,19 @@
+Añadimos en la linea 17 el $columna para recoger los datos del formulario de get.
+
+
+Operador ?? que aparece: 
+Operador de asignacion para ver si la variable esta creada o no 
+$columna = $_GET["order_by"] ?? "id_pelicula";
+aqui o se guarda lo del $_GET si existe o si no se guarda el id_pelicula
+Esto sirve para la primera vez que se actualiza la pagina por ejemplo, donde no tenemos
+nada para ordenar, que no se quedenb estas variables en null porque si no no se va a
+ ordenar nada y va a petar
+
+Lo que hacemos es recoger las variables mandadas por el link en GET o settear unas default
+si aun no hemos pulsado ninguna
+
+Ahora usaremos la variable columna y la variable direccion para ordenar la tabla
+
+En un acto completamente revolucionario y loco, en la consulta que nos devuelve toda la 
+tabla para pintar, hacemos un ORDER BY (QUE) y ahi le metemos las variables de columna 
+y direccion. 
