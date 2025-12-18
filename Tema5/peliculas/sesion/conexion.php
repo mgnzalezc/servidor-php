@@ -13,6 +13,16 @@ $_servidor = "localhost";
 $_usuario = "MEDAC";
 $_contraseña = "MEDAC";
 $_bd = "peliculas_bd";
+/**
+ * Activar excepciones en MYSQLI:
+ * - MYSQLI_REPORT_ERROR - convierte los errores de mysqli en errores reportables (excepciones)
+ * 
+ * MYSQL_REPORT_STRICT - hace que msql lance un excepcion en lugar de devolver false
+ * 
+ * Con esto ya podemos hacer try catch
+ */
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
 $_conexion = new mysqli($_servidor, $_usuario, $_contraseña, $_bd);
 
