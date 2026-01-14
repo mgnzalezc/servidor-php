@@ -44,8 +44,6 @@ session_start(); //Recogemos la sesión
             {$fila['id_pelicula']}";
         }
 
-        
-
 
     }
     ?>
@@ -53,7 +51,7 @@ session_start(); //Recogemos la sesión
         <a href="index.php" class="btn btn-secondary"> Ir al menu principal</a>
         <!--Esto de abajo es lo mismo que mandar un formulario con get
         Con los campos de order_by y de direction ):-->
-        <form action="" method="get">
+        <form action="" method="GET">
             <select name="orden" class="form-select mb-4 mt-4">
                 <option disabled selected>-------------Elige una----------------</option>
                 <option value="anno_fundacion-ASC">Ordenar por año de estreno (ASC)</option>

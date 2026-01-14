@@ -16,16 +16,30 @@
         exit();
     }
 
+    //no hace falta require si no hacemos consulta
+
     ?>
 
 </head>
 <body>
-    <h1>Has iniciado sesion, <?= $_SESSION["usuario"] //eso significa php echo, el ?= ?> </h1>
-
+    
+    <?php
+    if($_SESSION["admin"]){
+        echo "<h1>Bienvenido a la zona admin, ".$_SESSION['usuario'] ."</h1>";
+    } else{
+        echo "<h1>Has iniciado sesion, ".$_SESSION['usuario'] ."</h1>";
+    }
+    ?>
     <a href="sesion/logout.php">Log out</a>
     <a href="vistaPelis.php"> Lista de Peliculas</a>
     <a href="listaEstudios.php"> Lista de estudios</a>
-    <a href="nuevaPeli.php"> Crear pelicula </a>
+    <?php
+    if($_SESSION["admin"]){
+        echo "<a href='nuevaPeli.php'> Crear pelicula </a>";
+    }
+    ?>
+
+    
     
 </body>
 </html>

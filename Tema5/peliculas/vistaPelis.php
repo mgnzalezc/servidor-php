@@ -6,33 +6,34 @@ session_start(); //Recogemos la sesión
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>LISTA DE PELICULAS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   
     <?php
     error_reporting(E_ALL);
     ini_set("display_errors",1);
     require "sesion/conexion.php";
-
-    $columna = $_GET["order_by"] ?? "id_pelicula"; // orden por defecto
-    $direccion = $_GET["direction"] ?? "ASC"; // DIRECCION POR DEFECTO
-
     if(!isset($_SESSION["usuario"])){
         header("location: sesion/login.php");
         exit;
     }
+
+    $columna = $_GET["order_by"] ?? "id_pelicula"; // orden por defecto
+    $direccion = $_GET["direction"] ?? "ASC"; // DIRECCION POR DEFECTO
+
+    
     ?>
 </head>
 <body>
     <?php
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $consulta = "DELETE FROM peliculas WHERE id_pelicula = '{$_POST["id_pelicula"]}'";
+    if($_SERVER["REQUEST_METHOD"] == "POST" and isset($_POST["candidata"])){
+        $consulta = "DELETE FROM peliculas WHERE id_pelicula = '{$_POST["candidata"]}'";
         if($_conexion -> query($consulta)){
             echo "<div class='alert alert-succes'> Se ha borrado la pelicula con el ID 
-            {$fila['id_pelicula']}";
+           {$fila['candidata']}";
         }else{
             echo "<div class='alert alert-danger'> No se ha borrado la pelicula con el ID 
-            {$fila['id_pelicula']}";
+           {$fila['candididata']}";
         }
     }
     ?>
@@ -64,7 +65,7 @@ session_start(); //Recogemos la sesión
         </thead>
         <tbody>
            <?php
-            $consulta = "SELECT * FROM peliculas ORDER BY $columna $direccion";
+            $consulta = "SELECT * FROM peliculas ORDER BY $columna $direccion"; //estas varibales tienen que estar creadas arriba del todo
             $resultado = $_conexion->query($consulta);
             while($fila = $resultado->fetch_assoc()){
                 echo "<tr>";
@@ -76,7 +77,7 @@ session_start(); //Recogemos la sesión
                    echo "<a href='editarPelis.php?titulo=<?=".$fila["$titulo"]."'?> class='btn btn-warning w-100 mb-1'> Editar </a>"; 
                    //titulo se recoge en editarPeli como $titulo = $_GET["titulo"]
                    echo "<form action='' method='post'> 
-                   <input type='hidden' name='{$fila["id_pelicula"]}'> 
+                   <input type='hidden' value='{$fila["id_pelicula"]} name='candidata''>
                    <input type='submit' value='Borrar' class='btn btn-danger '>
                    </form>"; 
                    echo "</td>";
