@@ -33,8 +33,8 @@ session_start(); //Recogemos la sesión
 <body>
     <?php
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $consulta1 = "DELETE FROM peliculas WHERE nombre_estudio = '{$_POST['nombre_estudio']}'";
-        $consulta = "DELETE FROM estudios WHERE nombre_estudio = '{$_POST['nombre_estudio']}'";
+        $consulta1 = "DELETE FROM peliculas WHERE nombre_estudio = '{$_POST['carmina']}'";
+        $consulta = "DELETE FROM estudios WHERE nombre_estudio = '{$_POST['carmina']}'";
         if($_conexion -> query($consulta1)){
             echo "<div class='alert alert-succes'> Se ha borrado las peliculas del estudio
             {$_POST['nombre_estudio']}";
@@ -91,10 +91,10 @@ session_start(); //Recogemos la sesión
                    echo "<td>"; 
                    echo "<a href='editarEstudio.php' class='btn btn-warning mb-1'> Editar </a>"; 
                    echo "<form action='' method='post'> 
-                   <input type='hidden' name='{$fila["nombre_estudio"]}'> 
+                   <input type='hidden' name='carmina' value='{$fila["nombre_estudio"]}'>
                    <input type='submit' value='Borrar' class='btn btn-danger '>
                    </form>"; 
-                   echo "</td>";
+                   echo "</td>"; # aqui el hidden esta mal tambien ponle value cojones
                 }
                 echo "</tr>";
             } 
