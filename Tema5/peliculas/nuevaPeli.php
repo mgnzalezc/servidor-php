@@ -189,7 +189,7 @@ session_start();
                 try{
                     $_conexion->begin_transaction();
                     $stmt = $_conexion->prepare($consulta);
-                    $stmt->bind_param("ssid", $titulo, $nombre_estudio, $anno_estreno, $num_temporadas, $duracion); //enlazamos en la interrogacion de arriba
+                    $stmt->bind_param("ssddi", $titulo, $nombre_estudio, $anno_estreno, $num_temporadas, $duracion); //enlazamos en la interrogacion de arriba
                     $stmt->execute();
 
                     $_conexion->commit(); //se manda todo de una, si algo falla se manda todo para atras

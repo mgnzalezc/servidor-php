@@ -73,7 +73,8 @@ session_start(); //Recogemos la sesión
                 }
                 if($_SESSION["admin"]){
                    echo "<td>"; 
-                   echo "<a href='editarPelis.php' class='btn btn-warning w-100 mb-1'> Editar </a>"; 
+                   echo "<a href='editarPelis.php?titulo=<?=".$fila["$titulo"]."'?> class='btn btn-warning w-100 mb-1'> Editar </a>"; 
+                   //titulo se recoge en editarPeli como $titulo = $_GET["titulo"]
                    echo "<form action='' method='post'> 
                    <input type='hidden' name='{$fila["id_pelicula"]}'> 
                    <input type='submit' value='Borrar' class='btn btn-danger '>

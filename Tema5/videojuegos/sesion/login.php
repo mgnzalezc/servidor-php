@@ -15,7 +15,7 @@
 <body>
 
     <?php
-        if($_SERVER["REQUEST_METHOD"] =="POST"){
+        if($_SERVER["REQUEST_METHOD"] =="POST" && isset($_POST["mandado"])){
             $tmp_usuario = $_POST["usuario"];
             $tmp_contrasena = $_POST["contrasena"];
         
@@ -93,6 +93,8 @@
                         <input type="checkbox" name="admin" class="form-check-input">
                         <label class="form-check-label" for="">Eres admin?</label> <!--asi pq le gusta mas a alejandro-->
                     </div>
+
+                    <input type="hidden" name="mandado"> <!--para que no pete la primera vez que carga la pagina-->
 
                     <div class="mb-3">
                         <input type="submit" value="Iniciar sesion" class="btn btn-primary w-100">

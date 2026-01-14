@@ -22,6 +22,9 @@
     ?>
 </head>
 <body>
+    <?php
+        // codigo deborrar con in post && isset(titulo)
+    ?>
     <table class="table table-striped">
         <thead class="table-primary">
             <tr>
@@ -32,7 +35,8 @@
                 <th>H duracion</th>
                 <?php
                 if($_SESSION["admin"])
-                    echo "<th>Acciones</th>";
+                    echo "<th>Editar</th>";
+                    echo "<th>Borrar</th>";
                 ?>
             </tr>
         </thead>
@@ -42,17 +46,18 @@
             $resultado = $_conexion->query($consulta);
             while($fila = $resultado->fetch_assoc()){
                 echo "<tr>";
-                foreach($fila as $peli){
-                    if($peli != $fila["id_videojuego"]){
-                        echo "<td>$peli</td>";
+                foreach($fila as $juego){
+                    //para no imprimir el if usamos este if, sino echo juego y punto
+                    if($juego != $fila["id_videojuego"]){
+                        echo "<td>$juego</td>";
                     }
                     
                 }
                 if($_SESSION["admin"]){
                    echo "<td>"; 
-                   echo "<a href='editarPelis.php' class='btn btn-warning w-100 mb-1'> Editar </a>"; 
+                   echo "<a href='editarJuego.php?titulo='{$fila["id_videojuego"]}' class='btn btn-warning w-100 mb-1'> Editar </a>"; 
                    echo "<form action='' method='post'> 
-                   <input type='hidden' name='{$fila["id_videojuego"]}'> 
+                   <input type='hidden' name='titulo' value='{$fila["id_videojuego"]}'> 
                    <input type='submit' value='Borrar' class='btn btn-danger '>
                    </form>"; 
                    echo "</td>";

@@ -34,6 +34,7 @@
             if(isset($usuario) && isset($contrasena)){
                 $consulta = "SELECT * FROM usuarios WHERE usuario = '$usuario'";
                 $resultado = $_conexion->query($consulta);
+                //este pre no hace falta, es solo para ver los resultados
                 echo "<pre>";
                 var_dump($resultado);
                 echo "</pre>";
