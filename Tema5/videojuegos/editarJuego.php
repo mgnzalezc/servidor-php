@@ -14,11 +14,11 @@
     error_reporting(E_ALL);
     ini_set("display_errors",1);
     if(!isset($_SESSION["usuario"])){
-        header("location: sesion/login.php"); //manda de vuuelta a login si no se ha logineado, por si alguien copia y pega el url
+        header("location: sesion/login.php"); //manda de vuelta a login si no se ha logineado, por si alguien copia y pega el url
         exit();
     }
     if(!$_SESSION["admin"]){ //si no eres admin no puedes estar aqui
-        header("location: index.php"); //manda de vuuelta a login si no se ha logineado, por si alguien copia y pega el url
+        header("location: index.php");
         exit();
     }
     require "session/conexion.php";
@@ -30,7 +30,14 @@
     //print_r($info_juego); para comprobar a ver si los datos estan bien
 
 
-    // falta back de ale
+    // Para la lista desplegable
+    $desarrolladoras = [];
+    $consulta_lista = "SELECT nombre_desarrolladora FROM desarrolladoras";
+    $res = $_conexion->query($consulta_lista);
+    while($fila = $res->fetch_assoc()){
+        array_push($desarrolladoras, $fila["nombre_desarrolladora"]);
+    }
+    print_r($desarrolladoras);
 
 
     ?>
@@ -42,7 +49,7 @@
         // mirar que las variables estan bien en el html php
         $titulo = trim($_POST["titulo"]);
         $nombre_desarrolladora = trim($_POST["nombre_desarrolladora"] ?? ""); //como es desplegable si esta vacio no se manda, entonces decimos q se cree cad vacia
-        $anno_estreno = trim($_POST["anno_estreno"]);
+        $anno_lanzamiento = trim($_POST["anno_lanzamiento"]);
         $resena = trim($_POST["resena"]);
         $duracion = trim($_POST["duracion"]);
 
@@ -58,7 +65,7 @@
                 $errores = true;
             }
 
-            if($anno_estreno == ""){
+            if($anno_lanzamiento == ""){
                 $err_anno = "<div class='alert alert-danger'>El año de estreno no puede estar vacío</div>";
                 $errores = true;
             }
@@ -91,15 +98,16 @@
                  * 
                  */
                 
+                //aqui deberian estar los nombres bien de la base de datos
                 $consulta = "UPDATE videojuegos SET
                             titulo = ?,
-                            nombre_desarrolladora =?,
-                            anno_estreno=?,
-                            resena=?,
-                            duracion=?
-                            WHERE titulo = {$_GET["titulo"]}"; //esto se llama placeholder
+                            nombre_desarrolladora = ?,
+                            anno_lanzamiento = ?,
+                            porcentaje_reseñas = ?,
+                            horas_duracion = ? 
+                            WHERE titulo = {$_GET["titulo"]}"; //placeholder en update es asi
                 $stmt = $_conexion->prepare($consulta);
-                $stmt->bind_param("ssddi", $titulo, $nombre_desarrolladora, $anno_estreno, $resena, $duracion);
+                $stmt->bind_param("ssddi", $titulo, $nombre_desarrolladora, $anno_lanzamiento, $resena, $duracion);
 
                 if($stmt->execute()){
                     echo "<div class='alert alert-success'>La peli {$_GET["titulo"]} ha sido modificada</div>";
@@ -107,7 +115,7 @@
                     echo "<div class='alert alert-danger'>La peli {$_GET["titulo"]} NO ha sido modificada</div>";
                 }
 
-                //limpiar las variables del formulario 
+                //limpiar las variables del formulario. esto nose si hay q hacerlo en update... alejandro no lo ha hecho
                 $titulo = $nombre_desarrolladora = $anno_estreno = $duracion = $resena = "";
             }
     
@@ -117,12 +125,12 @@
     ?>
     
     <div class="containter mt-4">
-        <h1 class="fs-1">Editar juego</h1>
+        <h1 class="fs-1">Editar juego <?= $info_juego["titulo"] ?></h1>
         <form action="" method="POST">
 
             <div class="mb-3">
                 <label class="form-label">Título del juego</label>
-                <input type="text" name="titulo" class="form-control" value="<?= htmlspecialchars($titulo); ?>">
+                <input type="text" name="titulo" class="form-control" value="<?= htmlspecialchars($info_juego["titulo"]); ?>">
                 <?php //if(isset($err_titulo)) echo $err_titulo; ?>
                 <?= $err_titulo ?? "" ?>
             </div>
@@ -147,17 +155,20 @@
 
             <div class="mb-3">
                 <label class="form-label">Año de estreno</label>
-                <input type="text" name="anno_estreno" class="form-control">
+                <input type="text" name="anno_lanzamiento" class="form-control" value="<?= htmlspecialchars($info_juego["anno_lanzamiento"])?>">
+                <?= $err_anno ?? "" ?>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Reseña</label>
-                <input type="text" name="nresena" class="form-control">
+                <input type="text" name="resena" class="form-control" value="<?= $info_juego["porcentaje_resena"] ?>">
+                <?= $err_resena ?? "" ?>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Duración (en minutos)</label>
-                <input type="text" name="duracion" class="form-control">
+                <input type="text" name="duracion" class="form-control" value="<?= $info_juego["horas_duracion"] //esto es lo que busco en la bd asiq no son los nombres de las variables, sino de los campos de la bd?>">
+                <?= $err_duracion ?? "" ?>
             </div>
 
             <div class="mb-3">

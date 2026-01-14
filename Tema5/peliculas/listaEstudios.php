@@ -13,6 +13,10 @@ session_start(); //Recogemos la sesión
     error_reporting(E_ALL);
     ini_set("display_errors",1);
     require "sesion/conexion.php";
+    if(!isset($_SESSION["usuario"])){
+        header("location: sesion/login.php");
+        exit;
+    }
 
     if(isset($_GET["orden"])){
         $orden = $_GET["orden"];    
@@ -23,11 +27,6 @@ session_start(); //Recogemos la sesión
     $columna = $tablaOrden[0] ?? "nombre_estudio"; // orden por defecto
     $direccion = $tablaOrden[1] ?? "ASC"; // DIRECCION POR DEFECTO
     
-
-    if(!isset($_SESSION["usuario"])){
-        header("location: sesion/login.php");
-        exit;
-    }
     ?>
 </head>
 <body>
@@ -83,8 +82,8 @@ session_start(); //Recogemos la sesión
             $resultado = $_conexion->query($consulta);
             while($fila = $resultado->fetch_assoc()){
                 echo "<tr>";
-                foreach($fila as $peli){
-                    echo "<td>$peli</td>";
+                foreach($fila as $estudio){
+                    echo "<td>$estudio</td>";
                 }
                 // AQUI METER UN TD CON EL NUMERO DE PELIS POR CADA ESTUDIO IINER JOIN
                 if($_SESSION["admin"]){

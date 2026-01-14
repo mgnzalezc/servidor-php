@@ -23,7 +23,15 @@
 </head>
 <body>
     <?php
-        // codigo deborrar con in post && isset(titulo)
+        // codigo de borrar con if post && isset(titulo)
+        if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["titulo"])){
+        $consulta = "DELETE FROM videojuegos WHERE titulo = '{$_POST["titulo"]}'";
+        if($_conexion->query($consulta)){
+            echo "<div class='alert alert-success'>Se ha eliminado correctamente el juego {$_POST["titulo"]} </div>";
+        }else{
+            echo "<div class='alert alert-danger'>CAGADA</div>";
+        }
+    }
     ?>
     <table class="table table-striped">
         <thead class="table-primary">
@@ -31,12 +39,13 @@
                 <th>Titulo</th>
                 <th>Desarrolladora</th>
                 <th>Año de lanzamiento</th>
-                <th>% reseñas</th>
-                <th>H duracion</th>
+                <th>Reseñas</th>
+                <th>Duracion</th>
                 <?php
-                if($_SESSION["admin"])
+                if($_SESSION["admin"]){
                     echo "<th>Editar</th>";
                     echo "<th>Borrar</th>";
+                }
                 ?>
             </tr>
         </thead>
@@ -55,10 +64,12 @@
                 }
                 if($_SESSION["admin"]){
                    echo "<td>"; 
-                   echo "<a href='editarJuego.php?titulo='{$fila["id_videojuego"]}' class='btn btn-warning w-100 mb-1'> Editar </a>"; 
+                   echo "<a href='editarJuego.php?titulo='{$fila["titulo"]}' class='btn btn-warning w-100 mb-1'> Editar </a>"; 
+                   echo "</td>";
+                   echo "<td>";
                    echo "<form action='' method='post'> 
-                   <input type='hidden' name='titulo' value='{$fila["id_videojuego"]}'> 
-                   <input type='submit' value='Borrar' class='btn btn-danger '>
+                   <input type='hidden' name='titulo' value='{$fila["titulo"]}'> 
+                   <input type='submit' value='Borrar {$fila["titulo"]}' class='btn btn-danger'>
                    </form>"; 
                    echo "</td>";
                 }

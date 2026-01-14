@@ -63,7 +63,7 @@
             if($correcto){
                 $contrasena_cifrada = password_hash($contrasena, PASSWORD_DEFAULT);
                 $consulta = "INSERT INTO usuarios (usuario, contrasena, admin) VALUES ('$usuario', '$contrasena_cifrada', '$admin')";
-                if($resultado = $_conexion->query($consulta)){ //si se ha podido hacer la query o no
+                if($_conexion->query($consulta)){ //si se ha podido hacer la query o no
                     echo "<div class='alert alert-success'> Usuario registrado correctamente </div>";
                 } else{
                     echo "<div class='alert alert-danger'> No se ha podido registrar </div>";
@@ -92,7 +92,7 @@
                         ?>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 form-check">
                         <input type="checkbox" name="admin" class="form-check-input">
                         <label class="form-check-label" for="">Eres admin?</label>
                     </div>
