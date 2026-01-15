@@ -13,10 +13,12 @@ session_start(); //Recogemos la sesión
     error_reporting(E_ALL);
     ini_set("display_errors",1);
     require "sesion/conexion.php";
+
     if(!isset($_SESSION["usuario"])){
         header("location: sesion/login.php");
         exit;
     }
+
 
     if(isset($_GET["orden"])){
         $orden = $_GET["orden"];    
@@ -27,6 +29,7 @@ session_start(); //Recogemos la sesión
     $columna = $tablaOrden[0] ?? "nombre_estudio"; // orden por defecto
     $direccion = $tablaOrden[1] ?? "ASC"; // DIRECCION POR DEFECTO
     
+    
     ?>
 </head>
 <body>
@@ -34,10 +37,18 @@ session_start(); //Recogemos la sesión
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $consulta1 = "DELETE FROM peliculas WHERE nombre_estudio = '{$_POST['carmina']}'";
         $consulta = "DELETE FROM estudios WHERE nombre_estudio = '{$_POST['carmina']}'";
-        if($_conexion -> query($consulta1)){
+        if($_conexion -> query($consulta1)){ //borra pelis, y si ha sido posible entra
             echo "<div class='alert alert-succes'> Se ha borrado las peliculas del estudio
             {$_POST['nombre_estudio']}";
-            $_conexion -> query($consulta);
+            $_conexion -> query($consulta); // borra estudio
+            //para ponerlo con mensaje bonito tb los estudios:
+            /*
+            if($_conexion-> query($consulta)){
+                echo "<div class='alert alert-success'>Se ha eliminado correctamente la desarolladora {$_POST["titulo"]} </div>";
+            }else{
+                echo "<div class='alert alert-danger'>Se ha eliminado el juego pero no la desa</div>";
+            }
+            */
         }else{
             echo "<div class='alert alert-danger'> No se ha borrado la pelicula con el ID 
             {$fila['id_pelicula']}";
@@ -82,8 +93,8 @@ session_start(); //Recogemos la sesión
             $resultado = $_conexion->query($consulta);
             while($fila = $resultado->fetch_assoc()){
                 echo "<tr>";
-                foreach($fila as $estudio){
-                    echo "<td>$estudio</td>";
+                foreach($fila as $peli){
+                    echo "<td>$peli</td>";
                 }
                 // AQUI METER UN TD CON EL NUMERO DE PELIS POR CADA ESTUDIO IINER JOIN
                 if($_SESSION["admin"]){
