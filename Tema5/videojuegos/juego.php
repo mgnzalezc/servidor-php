@@ -26,12 +26,12 @@
         // codigo de borrar con if post && isset(titulo)
         if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["titulo"])){
         $consulta = "DELETE FROM videojuegos WHERE titulo = '{$_POST["titulo"]}'";
-        if($_conexion->query($consulta)){
-            echo "<div class='alert alert-success'>Se ha eliminado correctamente el juego {$_POST["titulo"]} </div>";
-        }else{
-            echo "<div class='alert alert-danger'>CAGADA</div>";
+            if($_conexion->query($consulta)){
+                echo "<div class='alert alert-success'>Se ha eliminado correctamente el juego {$_POST["titulo"]} </div>";
+            }else{
+                echo "<div class='alert alert-danger'>CAGADA</div>";
+            }
         }
-    }
     ?>
     <table class="table table-striped">
         <thead class="table-primary">

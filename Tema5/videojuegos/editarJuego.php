@@ -21,7 +21,7 @@
         header("location: index.php");
         exit();
     }
-    require "session/conexion.php";
+    require "sesion/conexion.php";
 
     $consulta = "SELECT * FROM videojuegos WHERE titulo = '{$_GET["titulo"]}'";
     $res = $_conexion->query($consulta);

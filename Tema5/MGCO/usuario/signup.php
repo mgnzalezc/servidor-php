@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>crear user</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    -->
     <?php
     error_reporting(E_ALL);
     ini_set("display_errors",1);
     require "conexion.php";
 
-
-    // ACORDARSE QUE HEMOS CREADO ale CON CONTRASEÑA Ale123456789!
     ?>
 
 
@@ -21,29 +19,24 @@
 <body>
     <?php
         if($_SERVER["REQUEST_METHOD"] =="POST"){
-            $tmp_usuario = $_POST["usuario"];
+            $tmp_nombre = $_POST["nombre"];
             $tmp_contrasena = $_POST["contrasena"];
-            //en checkbox, si se ha mandado algo existe y si no pues no (no hay cadena vacia)
-            $admin = isset($_POST["admin"]) ? 1 : 0; //si es true, guardo 1, si es false guardo 0
+            $tmp_rol = $_POST["rol"] ?? ""; //si vacio, cadena vacia
+            
             $correcto = true; //hacemos semaforo para errores
 
             // VALIDACION USUARIO
 
-            $tmp_usuario = htmlspecialchars($tmp_usuario);
-            $tmp_usuario = trim($tmp_usuario);
-            $tmp_usuario = preg_replace("/\s+/", "_", $tmp_usuario);
+            $tmp_nombre = htmlspecialchars($tmp_nombre);
+            $tmp_nombre = trim($tmp_nombre);
+            $tmp_nombre = preg_replace("/\s+/", "_", $tmp_nombre);
 
-            if ($tmp_usuario == ""){ //obligatorio siempre
-                $err_usuario = "Inserta un usuario";
+            if ($tmp_nombre == ""){ //obligatorio siempre
+                $err_nombre = "Inserta un usuario";
                 $correcto = false;
-            }elseif(strlen($tmp_usuario)<3){
-                $err_usuario = "El usuario tiene que tener al menos 3 chars";
-                $correcto = false;
-            } else{
-                $usuario = $tmp_usuario;
+            } else {
+                $nombre = $tmp_nombre;
             }            
-
-
 
             // VALIDACION CONTRASEÑA
 
@@ -53,17 +46,21 @@
             if ( $tmp_contrasena == ""){ //obligatorio siempre
                 $err_contrasena = "Inserta una contraseña";
                 $correcto = false;
-            }elseif (!(preg_match("/^(?=.*[A-Z])(?=.*[a-z])(?=.*[&%@!])[A-Za-z\d%&@!]{8,16}$/",$tmp_contrasena))){ 
-                // necesita al menos 1 mayus 1 minus 1 caracter especial y entre 8-16 caracteres
-                $correcto = false;
-                $err_contrasena = "la contraseña tiene que tener al menos 3 chars, incluir numeros y mayusculas";
             } else {
                 $contrasena = $tmp_contrasena;
             }
 
+            // VALIDACION TIPO USUARIO
+            if ( $tmp_rol == ""){ //obligatorio siempre
+                $err_rol= "Inserta un tipo de usuario";
+                $correcto = false;
+            } else {
+                $rol = $tmp_rol;
+            }
+
             if($correcto){
                 $contrasena_cifrada = password_hash($contrasena, PASSWORD_DEFAULT);
-                $consulta = "INSERT INTO usuarios (usuario, contrasena, admin) VALUES ('$usuario', '$contrasena_cifrada', '$admin')";
+                $consulta = "INSERT INTO usuarios (nombre, contrasena, rol) VALUES ('$nombre', '$contrasena_cifrada', '$rol')";
                 if($_conexion->query($consulta)){ //si se ha podido hacer la query o no
                     echo "<div class='alert alert-success'> Usuario registrado correctamente </div>";
                 } else{
@@ -79,9 +76,9 @@
                 <form action="" method="POST">
                     <div class="mb-3">
                         <label class="form-label" for="">Usuario</label>
-                        <input type="text" name="usuario" class="form-control">
+                        <input type="text" name="nombre" class="form-control">
                         <?php
-                        if (isset($err_usuario)) echo "<div class='alert alert-danger'> $err_usuario </div>";
+                        if (isset($tmp_nombre)) echo "<div class='alert alert-danger'> $tmp_nombre </div>";
                         ?>
                     </div>
 
@@ -94,8 +91,17 @@
                     </div>
 
                     <div class="mb-3 form-check">
-                        <input type="checkbox" name="admin" class="form-check-input">
-                        <label class="form-check-label" for="">Eres admin?</label>
+                        <label class="form-label" for="">¿Que tipo de usuario eres?</label>
+                        <select type="checkbox" name="rol" class="form-check-input">
+                            <option value="" disabled selected>-- Elija un tipo de usuario --</option>
+                            <option value="cliente">Cliente</option>
+                            <option value="admin">Administrador</option>
+                            <option value="editor">Editor</option>
+                        </select>
+                        <?php
+                        if (isset($err_rol)) echo "<div class='alert alert-danger'> $err_rol</div>";
+                        ?>
+                        
                     </div>
 
                     <div class="mb-3">
@@ -109,7 +115,7 @@
         </div>
     </div>
     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    -->
 </body>
 </html>
