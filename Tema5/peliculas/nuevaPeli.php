@@ -195,6 +195,7 @@ session_start();
                     $_conexion->commit(); //se manda todo de una, si algo falla se manda todo para atras
 
                     $stmt->close();
+                    //hay q close tb aunque no useamos transactions (mirar nuevo en MGCO)
 
                 }catch(mysqli_sql_exception $e){
                     //rollback aqui, si el try no funciona entonces catch

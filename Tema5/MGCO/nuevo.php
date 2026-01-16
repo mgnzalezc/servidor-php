@@ -91,6 +91,7 @@ session_start();
                     echo "<div class='alert alert-danger'>El producto {$_GET["nombre"]} NO ha podido modificarse</div>";
                 }
                 $nombre = $nombre_proveedor = $categoria = $precio = $stock = "";
+                $stmt->close();
             }
     
 

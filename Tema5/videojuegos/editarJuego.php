@@ -117,6 +117,7 @@
 
                 //limpiar las variables del formulario. esto nose si hay q hacerlo en update... alejandro no lo ha hecho
                 $titulo = $nombre_desarrolladora = $anno_estreno = $duracion = $resena = "";
+                //se deberia cerrar $stmt->close(); y en insertar juego tb
             }
     
 
