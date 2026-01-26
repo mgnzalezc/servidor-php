@@ -44,6 +44,7 @@
         $_conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
         // Para que de manera prefeterminada extraigamos la info de las querys en formato array asociativo
+        // Cambiamos la manera estandard de hacer fetch por la forma que sabemos que es fetch asscos, cada vez que se use fetch se aplica fetch assoc
         $_conexion->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
         //echo "conectado";
