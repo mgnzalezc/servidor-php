@@ -40,12 +40,12 @@
      * SERVER es un array asociativ con indo del servidor
      * REQUEST METHOD es lo que nos dice que metodo HTTPS se ha usado
      */
-    $metodo = $_SERVER["REQUEST_METHOD"];
+    $metodo = $_SERVER["REQUEST_METHOD"]; //recogemos el metodo q sea
 
     /**
      * file_get_contents("php://input") -> lee el cuerpo de la peticion
      * 
-     * cuando alguien envia datos al nucleo de la API estos datos viajan en el cuerpo de la peticion hTTP
+     * cuando alguien envia datos al nucleo de la API estos datos viajan en el cuerpo de la peticion HTTP
      * 
      * con "php://input" podemos leer el contenido crudo raw del cuerpo de la peticion
      */
@@ -66,17 +66,21 @@
             break;
 
         case "POST":
-            //controlPost($_conexion, $entrada);
+            controlPost($_conexion, $entrada);
             break;
 
         case "PUT":
-            //controlPut($_conexion, $entrada);
+            controlPut($_conexion, $entrada);
             break;
 
         case "DELETE":
-            //controlDelete($_conexion, $entrada);
+            controlDelete($_conexion, $entrada);
             break;
         default:
+            echo json_encode(
+                ["estado" => "error", 
+                "mensaje" => "Error"]
+            );
             break;
     }
 
@@ -104,7 +108,8 @@
             //reescribo en formato array bidimensional asociativo
             $res = $res->fetchAll();
 
-            //enviar de vuelta al cliente
+            //enviar de vuelta al cliente del tiron. en api se hace directamente echo para devolver datos
+            //el header no se manda hasta el primer echo
             echo json_encode($res);
 
 
@@ -114,6 +119,105 @@
                 "detalles" => "otro mensaje"
           ]);
         }
+    }
+
+    function controlPost($_conexion, $entrada){
+        if(!isset($entrada["nombre_desarrolladora"]) || ($entrada["nombre_desarrolladora"]) === ""){
+            echo json_encode(
+                ["estado" => "error", 
+                "mensaje" => "Falta la primary key"]
+            );
+            return;
+        }
+        $des = $entrada["nombre_desarrolladora"];
+        $ciudad = $entrada["ciudad"] ?? "";
+        $anno = $entrada["anno_fundacion"] ?? 0;
+
+        try{
+            $consulta = "INSERT INTO desarrolladoras (nombre_desarrolladora, ciudad, anno_fundacion) 
+            VALUES (:viento, :lluvia, :muerte)";
+            $consulta = $_conexion->prepare($consulta);
+
+            $consulta->bindValue("viento", $des, PDO::PARAM_STR);
+            $consulta->bindValue("lluvia", $ciudad, PDO::PARAM_STR);
+            $consulta->bindValue("muerte", $anno, PDO::PARAM_INT);
+
+            $consulta->execute();
+
+            echo json_encode(
+                ["estado" => "exito", 
+                "mensaje" => "todo good"]
+            );
+
+        }catch(PDOException $e){
+            echo json_encode(
+                ["estado" => "error", 
+                "mensaje" => "todo mal"]
+            );
+        }
+
+    }
+
+    function controlDelete($_conexion){
+        if(!isset($entrada["nombre_desarrolladora"]) || ($entrada["nombre_desarrolladora"]) === ""){
+            echo json_encode(
+                ["estado" => "error", 
+                "mensaje" => "Falta la primary key"]
+            );
+            return;
+        }
+
+        $consulta = $_conexion->prepare("DELETE FROM desarrolladoras WHERE nombre_desarrolladora = :des");
+        $consulta->bindValue("des", $entrada["nombre_desarrolladora"], PDO::PARAM_STR);
+
+        $bien = $consulta->execute();
+        if($bien && $consulta->rowCount() === 1){
+            echo json_encode(
+                ["estado" => "exito", 
+                "mensaje" => "desa borrada"]
+            );
+        } else {
+            echo json_encode(
+                ["estado" => "error", 
+                "mensaje" => "desa no borrada"]
+            );
+        }
+
+    }
+
+    function controlPut($_conexion, $entrada){
+        // como nombre desarrolladora es la primary key, no podemos actualizar este campo, solo ciudad y año de fundacion
+        if(!isset($entrada["nombre_desarrolladora"]) || ($entrada["nombre_desarrolladora"]) === ""){
+            echo json_encode(
+                ["estado" => "error", 
+                "mensaje" => "Falta la primary key"]
+            );
+            return;
+        }
+        $des = $entrada["nombre_desarrolladora"];
+        $ciudad = $entrada["ciudad"] ?? "";
+        $anno = $entrada["anno_fundacion"] ?? 0;
+
+        $consulta = $_conexion->prepare("UPDATE desarrolladoras SET (ciudad = :ciud, anno_fundacion = :ano) WHERE nombre_desarrolladora = :des");
+
+        $consulta->bindValue("ciud", $ciudad, PDO::PARAM_STR);
+        $consulta->bindValue("ano", $anno, PDO::PARAM_INT);
+        $consulta->bindValue("des", $des, PDO::PARAM_STR);
+        
+        $bien = $consulta->execute();
+        if($bien && $consulta->rowCount() === 1){
+            echo json_encode(
+                ["estado" => "exito", 
+                "mensaje" => "desa actualizada"]
+            );
+        } else {
+            echo json_encode(
+                ["estado" => "error", 
+                "mensaje" => "desa no actualizada"]
+            );
+        }
+
+
     }
 
 
