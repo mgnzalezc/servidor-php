@@ -44,17 +44,19 @@
          * QUE VA A HACER ESTE FORM
          * 
          * desde donde accedemos a API
-         * enviaremos indo junto con el metodo que sea y la api me respondera
+         * enviaremos info junto con el metodo que sea y la api me respondera
          * sacamos info en formato JSON y si es necesario la transformaremos en otras cosas
          * 
          */
 
-        if($_SERVER["REQUEST_METHOD"] == "POST" ){
+        if($_SERVER["REQUEST_METHOD"] == "POST"){
             $metodo = $_POST["metodo"];
 
             $url = "html://localhost/servidor/Tema6/nucleo_api.php";
+
             if($metodo == "GET"){
                 $parametros_url = "";
+
                 if(isset($_POST["ciudad_filtro"]) && !empty($_POST["ciudad_filtro"])){
                     $parametros_url = "?ciudad=". urlencode($_POST["ciudad_filtro"]);
                     
@@ -63,9 +65,6 @@
 
         }
 
-        if($_SERVER["REQUEST_METHOD"] == "POST"){
-
-        }
 
 
         
