@@ -29,7 +29,7 @@
      * con el valor content type: application/json le decimos al cliente qye ko que le va a llegar esta en formato JSON
      * esto es importante sobre todo si estamos trabajando con JS
      */
-    header("Content Type: application/json");
+    header("Content-Type: application/json");
 
     /**
      * include() -> cargar el archivo de conexion a la db pero si falla se muestra un warning en vez de que se pare la ejecucion del script
@@ -79,7 +79,7 @@
         default:
             echo json_encode(
                 ["estado" => "error", 
-                "mensaje" => "Error"]
+                "mensaje" => "No se ha identificado el método"]
             );
             break;
     }
@@ -142,18 +142,18 @@
             $consulta->bindValue("lluvia", $ciudad, PDO::PARAM_STR);
             $consulta->bindValue("muerte", $anno, PDO::PARAM_INT);
 
-            $consulta->execute();
-
-            echo json_encode(
-                ["estado" => "exito", 
-                "mensaje" => "todo good"]
-            );
+            $bien = $consulta->execute();
+            if($bien && $consulta->rowCount() === 1){
+                echo json_encode([
+                "estado" => "exito",
+                "mensaje" => "La desarrolladora se ha metio correctamente"
+                ]);
+            }else{
+                echo json_encode(["estado"=>"error","mensaje"=>"No se ha podido insertar la desarrolladora"]);
+            }
 
         }catch(PDOException $e){
-            echo json_encode(
-                ["estado" => "error", 
-                "mensaje" => "todo mal"]
-            );
+            echo json_encode(["estado" => "error", "mensaje" => $e->getMessage()]);
         }
 
     }
@@ -194,11 +194,11 @@
             );
             return;
         }
+
+        $consulta = $_conexion->prepare("UPDATE desarrolladoras SET (ciudad = :ciud, anno_fundacion = :ano) WHERE nombre_desarrolladora = :des");
         $des = $entrada["nombre_desarrolladora"];
         $ciudad = $entrada["ciudad"] ?? "";
         $anno = $entrada["anno_fundacion"] ?? 0;
-
-        $consulta = $_conexion->prepare("UPDATE desarrolladoras SET (ciudad = :ciud, anno_fundacion = :ano) WHERE nombre_desarrolladora = :des");
 
         $consulta->bindValue("ciud", $ciudad, PDO::PARAM_STR);
         $consulta->bindValue("ano", $anno, PDO::PARAM_INT);
