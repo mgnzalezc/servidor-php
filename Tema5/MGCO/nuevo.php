@@ -7,8 +7,8 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nueva peli</title>
-    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
--->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
     <?php
     error_reporting(E_ALL);
     ini_set("display_errors",1);
@@ -104,7 +104,7 @@ session_start();
         <form action="" method="POST">
 <div class="mb-3">
                 <label class="form-label">Nombre del producto</label>
-                <input type="text" name="nombre" class="form-control" value="<?= htmlspecialchars($info_produ["nombre"]); ?>">
+                <input type="text" name="nombre" class="form-control" value="">
                 <?= $err_nombre ?? "" ?>
             </div>
 
@@ -127,20 +127,19 @@ session_start();
 
             <div class="mb-3">
                 <label class="form-label">Categoria</label>
-                <input type="text" name="categoria" class="form-control" value="<?= htmlspecialchars($info_produ["categoria"])?>">
+                <input type="text" name="categoria" class="form-control" value="">
                 <?= $err_categ ?? "" ?>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Precio</label>
-                <input type="text" name="precio" class="form-control" value="<?= $info_produ["precio"] ?>">
+                <input type="text" name="precio" class="form-control" value="">
                 <?= $err_precio ?? "" ?>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Stock</label>
-                <input type="text" name="stock" class="form-control" value="<?= $info_produ["stock"] //esto es lo que busco en la bd asiq no son los nombres de las variables, sino de los campos de la bd?>">
-                <?= $err_stock ?? "" ?>
+                <input type="text" name="stock" class="form-control" value="">
             </div>
 
             <div class="mb-3">
