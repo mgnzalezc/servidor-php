@@ -10,13 +10,14 @@
 <?php
 //paginacion:
 // 1) leer pagina actual desde la url, es decir, en q pag estamos
+// se recoge siempre al principio para ir navegando para alante y para atras
     $pagina = isset($GET["page"]) ? $_GET["page"] : 1; //si es true guarda eso, el ? lo separa, si es false mete 1
 
 // 2) cuantos resultados quiero por pagina
     $maxpp = 30;
 
 // 3) construimos la url con paginacion, no  todas nos dejan asiq comprobar primero si hay datos de paginacion. jikan si deja
-    $apiURL = "https://api.jikan.moe/v4/top/anime". http_build_query(
+    $apiURL = "https://api.jikan.moe/v4/top/anime?". http_build_query(
         ["page" => $pagina,
         "limit" => $maxpp]
     );
@@ -40,7 +41,7 @@
 
     curl_close($curl);
 
-    // vamops a sacar una tabla la posicion, el titulo, titulo en japo, nota, img portada
+    // vamos a sacar una tabla la posicion, el titulo, titulo en japo, nota, img portada
 
     $datos = json_decode($res, true);
     $animes = $datos["data"];
@@ -49,7 +50,7 @@
     $paginacion = $datos["pagination"];
     $paginaActual = $paginacion["current_page"] ?? $pagina;
     $ultPagina = $paginacion["last_visible_page"] ?? $pagina;
-    $sig = $paginacion["has_next_page"] ?? $pagina;
+    $sig = $paginacion["has_next_page"] ?? $pagina; //si tienes siguiente, osea si es la ultima
 
     //para enlace a la misma pag
     $actual = htmlspecialchars($_SERVER["PHP_SELF"]);
@@ -61,6 +62,11 @@
             echo "<a href='$actual?page={($paginaActual-1)}'>Ir atrás</a>";
             
         }
+        echo "Página $actual de $ultPagina ($maxpp por pagina)"; 
+        if($sig) {
+            echo "<a href='{($actual?page-1)}'></a>"; // FALTA RELLENAR ESTO
+        }
+
     ?>
 </div>
 <table>
@@ -81,7 +87,7 @@
                     foreach($animes as $anime){
                         echo "<tr>";
                             echo "<td>{$anime['rank']}</td>";
-                            echo "<td>{$anime['title']}</td>";
+                            echo "<td><a href='animeMejorado.php?{$anime['mal_id']}'>{$anime['title']}</a></td>";
                             echo "<td>{$anime['title_japanese']}</td>";
                             echo "<td>{$anime['score']}</td>";
                             echo "<td> <img src='{$anime['images']['jpg']['imgae_url']}' alt=''> </td>";
