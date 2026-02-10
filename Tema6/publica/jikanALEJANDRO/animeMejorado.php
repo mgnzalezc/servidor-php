@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>mejorado</title>
+    <title>Document</title>
 </head>
 <body>
     <?php
@@ -30,8 +30,8 @@
     $anime = $datos["data"];
     ?>
 
-    <h1><?= $anime["title"];?></h1>
-    <h1><?= $anime["title_japanese"];?></h1>
+    <h1><?= $anime["title"] ?></h1>
+    <h1><?= $anime["title_japanese"] ?></h1>
     <p><?= "Puntuación: ".$anime["score"]. " Episodios: ".$anime["episodes"] ?></p>
     <img src="<?= $anime["images"]["jpg"]["large_image_url"] ?>" alt="">
     <h3>Sinopsis</h3>

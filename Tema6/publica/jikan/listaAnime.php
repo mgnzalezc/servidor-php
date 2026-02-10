@@ -58,14 +58,14 @@
 ?>
 <div>
     <?php
-        if($actual>1){ //si es mayor a uno, pongo flecha palante y patras
+        if($paginaActual>1){ //si es mayor a uno, pongo flecha palante y patras
             echo "<a href='$actual?page={($paginaActual-1)}'>Ir atrás</a>";
             
         }
-        echo "Página $actual de $ultPagina ($maxpp por pagina)"; 
+        echo "Página $paginaActual de $ultPagina ($maxpp por pagina)"; 
         if($sig) {
-            echo "<a href='{($actual?page-1)}'></a>"; // FALTA RELLENAR ESTO
-        }
+            echo "<a href='$actual?page=".($paginaActual+1)."'>Siguiente</a>";
+            }   
 
     ?>
 </div>
@@ -87,10 +87,10 @@
                     foreach($animes as $anime){
                         echo "<tr>";
                             echo "<td>{$anime['rank']}</td>";
-                            echo "<td><a href='animeMejorado.php?{$anime['mal_id']}'>{$anime['title']}</a></td>";
+                            echo "<td><a href='animeMejorado.php?patapta=?{$anime['mal_id']}'>{$anime['title']}</a></td>";
                             echo "<td>{$anime['title_japanese']}</td>";
                             echo "<td>{$anime['score']}</td>";
-                            echo "<td> <img src='{$anime['images']['jpg']['imgae_url']}' alt=''> </td>";
+                            echo "<td> <img src='{$anime['images']['jpg']['image_url']}' alt=''> </td>";
                         echo "</tr>";
                     }
                 ?>
